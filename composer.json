@@ -10,6 +10,7 @@
     "bcosca/fatfree-core": "dev-master"
   },
   "autoload": {
-    "files": ["validation/validate.php", "classes/Member.php", "classes/PremiumMember.php"]
+    "classmap": ["classes/"],
+    "files": ["validation/validate.php"]
   }
 }
