@@ -6,6 +6,10 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit1ea0eb4bbcb1a5624d5d55950d685941
 {
+    public static $fallbackDirsPsr4 = array (
+        0 => __DIR__ . '/../..' . '/classes',
+    );
+
     public static $classMap = array (
         'Audit' => __DIR__ . '/..' . '/bcosca/fatfree-core/audit.php',
         'Auth' => __DIR__ . '/..' . '/bcosca/fatfree-core/auth.php',
@@ -53,6 +57,7 @@ class ComposerStaticInit1ea0eb4bbcb1a5624d5d55950d685941
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->fallbackDirsPsr4 = ComposerStaticInit1ea0eb4bbcb1a5624d5d55950d685941::$fallbackDirsPsr4;
             $loader->classMap = ComposerStaticInit1ea0eb4bbcb1a5624d5d55950d685941::$classMap;
 
         }, null, ClassLoader::class);

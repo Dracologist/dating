@@ -7,6 +7,18 @@
 <body>
 <div class="container">
 <form action="summary" method="post">
+    <fieldset>
+        <legend>Indoor</legend>
+        <repeat group="{{ @indoorOptions }}" value="{{ @indoorActivity }}">
+            <label><input type="checkbox" name="indoor[]" value="{{ @indoorActivity }}"></label>
+        </repeat>
+    </fieldset>
+    <fieldset>
+        <legend>Outdoor</legend>
+        <repeat group="{{ @outdoorOptions }}" value="{{ @outdoorActivity }}">
+            <label><input type="checkbox" name="outdoor[]" value="{{ @outdoorActivity }}"></label>
+        </repeat>
+    </fieldset>
     <input type="submit" value="Next>" class="btn btn-primary">
 </form>
 </div>

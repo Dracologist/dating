@@ -11,19 +11,19 @@
             <div class="col-sm-6">
                 <h4>First Name</h4>
                 <check if="{{isset(@errors['fname'])}}"><p>{{@errors['fname']}}</p></check>
-                <input type="text" name="fname">
+                <input type="text" name="fname" value="{{@fname}}">
                 <h4>Last Name</h4>
                 <check if="{{isset(@errors['lname'])}}"><p>{{@errors['lname']}}</p></check>
-                <input type="text" name="lname">
+                <input type="text" name="lname" value="{{@lname}}">
                 <h4>Age </h4>
                 <check if="{{isset(@errors['age'])}}"><p>{{@errors['age']}}</p></check>
-                <input type="text" name="age">
+                <input type="text" name="age" value="{{@age}}">
                 <h4>Gender</h4>
-                <input type="radio" name="gender" value="male"> Male<br>
-                <input type="radio" name="gender" value="female"> Female
+                <input type="radio" name="gender" value="male" <check if="{{@gender == male}}">selected</check>> Male<br>
+                <input type="radio" name="gender" value="female" <check if="{{@gender == female}}">selected</check>> Female
                 <h4>Seeking</h4>
-                <input type="radio" name="seeking" value="male"> Male<br>
-                <input type="radio" name="seeking" value="female"> Female
+                <input type="radio" name="seeking" value="male" <check if="{{@seeking == male}}">selected</check>> Male<br>
+                <input type="radio" name="seeking" value="female" <check if="{{@seeking == female}}">selected</check>> Female
                 <h4>State</h4>
                 <select name="state">
                     <option value="AL">Alabama</option>
@@ -73,16 +73,18 @@
                     <option value="UT">Utah</option>
                     <option value="VT">Vermont</option>
                     <option value="VA">Virginia</option>
-                    <option value="WA">Washington</option>
+                    <option value="WA" selected>Washington</option>
                     <option value="WV">West Virginia</option>
                     <option value="WI">Wisconsin</option>
                     <option value="WY">Wyoming</option>
                 </select>
                 <h4>Phone</h4>
                 <check if="{{isset(@errors['phone'])}}"><p>{{@errors['phone']}}</p></check>
-                <input type="tel" name="phone">
+                <input type="tel" name="phone" value="{{@phone}}">
+                <h4>Email</h4>
+                <input type="text" name="email" value="{{@email}}">
                 <h4>Premium Account</h4>
-                <label><input type="checkbox"> Sign me up for a premium account!</label>
+                <label><input type="checkbox" checked="{{@premium}}" value="yes"> Sign me up for a premium account!</label>
             </div>
             <div class="col-sm-6">
                 <h4>Biography</h4>
