@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+<form action="submit-interests" method="post">
+    <fieldset>
+        <legend>Indoor</legend>
+        <repeat group="{{ @SESSION.indoorOptions }}" value="{{ @indoorActivity }}">
+            <label><input type="checkbox" name="indoor[]" value="{{ @indoorActivity }}"> {{ @indoorActivity }}</label>
+        </repeat>
+    </fieldset>
+    <fieldset>
+        <legend>Outdoor</legend>
+        <repeat group="{{ @SESSION.outdoorOptions }}" value="{{ @outdoorActivity }}">
+            <label><input type="checkbox" name="outdoor[]" value="{{ @outdoorActivity }}"> {{ @outdoorActivity }}</label>
+        </repeat>
+    </fieldset>
+    <input type="submit" value="Next>" class="btn btn-primary">
+</form>
+</div>
+</body>
+</html>

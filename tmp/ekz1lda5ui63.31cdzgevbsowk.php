@@ -10,20 +10,20 @@
         <div class="row">
             <div class="col-sm-6">
                 <h4>First Name</h4>
-                <check if="{{isset(@errors['fname'])}}"><p>{{@errors['fname']}}</p></check>
-                <input type="text" name="fname" value="{{@fname}}">
+                <?php if (isset($errors['fname'])): ?><p><?= ($errors['fname']) ?></p><?php endif; ?>
+                <input type="text" name="fname" value="<?= ($SESSION['fname']) ?>">
                 <h4>Last Name</h4>
-                <check if="{{isset(@errors['lname'])}}"><p>{{@errors['lname']}}</p></check>
-                <input type="text" name="lname" value="{{@lname}}">
+                <?php if (isset($errors['lname'])): ?><p><?= ($errors['lname']) ?></p><?php endif; ?>
+                <input type="text" name="lname" value="<?= ($SESSION['lname']) ?>">
                 <h4>Age </h4>
-                <check if="{{isset(@errors['age'])}}"><p>{{@errors['age']}}</p></check>
-                <input type="text" name="age" value="{{@age}}">
+                <?php if (isset($errors['age'])): ?><p><?= ($errors['age']) ?></p><?php endif; ?>
+                <input type="text" name="age" value="<?= ($age) ?>">
                 <h4>Gender</h4>
-                <input type="radio" name="gender" value="male" <check if="{{@gender == male}}">selected</check>> Male<br>
-                <input type="radio" name="gender" value="female" <check if="{{@gender == female}}">selected</check>> Female
+                <input type="radio" name="gender" value="male" <?php if ($SESSION['gender'] == male): ?>selected<?php endif; ?>> Male<br>
+                <input type="radio" name="gender" value="female" <?php if ($SESSION['gender'] == female): ?>selected<?php endif; ?>> Female
                 <h4>Seeking</h4>
-                <input type="radio" name="seeking" value="male" <check if="{{@seeking == male}}">selected</check>> Male<br>
-                <input type="radio" name="seeking" value="female" <check if="{{@seeking == female}}">selected</check>> Female
+                <input type="radio" name="seeking" value="male" <?php if ($SESSION['seeking'] == male): ?>selected<?php endif; ?>> Male<br>
+                <input type="radio" name="seeking" value="female" <?php if ($SESSION['seeking'] == female): ?>selected<?php endif; ?>> Female
                 <h4>State</h4>
                 <select name="state">
                     <option value="AL">Alabama</option>
@@ -79,16 +79,16 @@
                     <option value="WY">Wyoming</option>
                 </select>
                 <h4>Phone</h4>
-                <check if="{{isset(@errors['phone'])}}"><p>{{@errors['phone']}}</p></check>
-                <input type="tel" name="phone" value="{{@phone}}">
+                <?php if (isset($errors['phone'])): ?><p><?= ($errors['phone']) ?></p><?php endif; ?>
+                <input type="tel" name="phone" value="<?= ($SESSION['phone']) ?>">
                 <h4>Email</h4>
-                <input type="text" name="email" value="{{@email}}">
+                <input type="text" name="email" value="<?= ($SESSION['email']) ?>">
                 <h4>Premium Account</h4>
-                <label><input type="checkbox" checked="{{@premium}}" value="yes"> Sign me up for a premium account!</label>
+                <label><input type="checkbox" name="premium"> Sign me up for a premium account!</label>
             </div>
             <div class="col-sm-6">
                 <h4>Biography</h4>
-                <textarea name="bio"></textarea>
+                <textarea name="bio"><?= ($SESSION['bio']) ?></textarea>
             </div>
         </div>
         <div class="row">

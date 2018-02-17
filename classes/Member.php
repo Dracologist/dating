@@ -1,23 +1,62 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ejcka
+ * An object representing a member.
+ * User: Elizabeth Kanzler
  * Date: 2/16/2018
  * Time: 7:09 PM
  */
 
 class Member
 {
+    /**
+     * @var the first name of the member
+     */
     protected $fname;
+    /**
+     * @var the last name of the member
+     */
     protected $lname;
+    /**
+     * @var the age of the member
+     */
     protected $age;
+    /**
+     * @var the gender of the member
+     */
     protected $gender;
+    /**
+     * @var the phone number of the member
+     */
     protected $phone;
+    /**
+     * @var the email address of the member
+     */
     protected $email;
+    /**
+     * @var the state of the member
+     */
     protected $state;
+    /**
+     * @var the gender the member is seeking
+     */
     protected $seeking;
+    /**
+     * @var the bio of the member
+     */
     protected $bio;
 
+    /**
+     * Member constructor.
+     * @param $first the first name of the member
+     * @param $last the last name of the member
+     * @param $years the age of the member
+     * @param $sex the gender of the member
+     * @param $number the phone number of the member
+     * @param $address the email address of the member
+     * @param $home the state of the member
+     * @param $wants the gender the member is seeking
+     * @param $biography the bio of the member
+     */
     function __construct($first, $last, $years, $sex, $number, $address, $home, $wants, $biography)
     {
         $this->fname = $first;
@@ -32,23 +71,23 @@ class Member
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getFname()
+    public function getFirstname()
     {
         return $this->fname;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getLname()
+    public function getLastname()
     {
         return $this->lname;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getAge()
     {
@@ -56,7 +95,7 @@ class Member
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getGender()
     {
@@ -64,7 +103,7 @@ class Member
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getPhone()
     {
@@ -72,7 +111,7 @@ class Member
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getEmail()
     {
@@ -80,7 +119,7 @@ class Member
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getState()
     {
@@ -88,7 +127,7 @@ class Member
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getSeeking()
     {
@@ -96,7 +135,7 @@ class Member
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getBio()
     {
