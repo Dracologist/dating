@@ -6,19 +6,24 @@
 </head>
 <body>
 <div class="container">
-    <h1>Personal Information</h1>
-    <form method="post" <check if="{{ @premium == false}}">action="summary"</check> <check if="{{ @premium }}">action="interests"</check>>
+    <form method="post" action="submit-profile">
         <div class="row">
             <div class="col-sm-6">
                 <h4>First Name</h4>
+                <check if="{{isset(@errors['fname'])}}"><p>{{@errors['fname']}}</p></check>
                 <input type="text" name="fname">
                 <h4>Last Name</h4>
+                <check if="{{isset(@errors['lname'])}}"><p>{{@errors['lname']}}</p></check>
                 <input type="text" name="lname">
                 <h4>Age </h4>
+                <check if="{{isset(@errors['age'])}}"><p>{{@errors['age']}}</p></check>
                 <input type="text" name="age">
                 <h4>Gender</h4>
                 <input type="radio" name="gender" value="male"> Male<br>
                 <input type="radio" name="gender" value="female"> Female
+                <h4>Seeking</h4>
+                <input type="radio" name="seeking" value="male"> Male<br>
+                <input type="radio" name="seeking" value="female"> Female
                 <h4>State</h4>
                 <select name="state">
                     <option value="AL">Alabama</option>
@@ -73,7 +78,8 @@
                     <option value="WI">Wisconsin</option>
                     <option value="WY">Wyoming</option>
                 </select>
-                <h4>Phone: </h4>
+                <h4>Phone</h4>
+                <check if="{{isset(@errors['phone'])}}"><p>{{@errors['phone']}}</p></check>
                 <input type="tel" name="phone">
                 <h4>Premium Account</h4>
                 <label><input type="checkbox"> Sign me up for a premium account!</label>
@@ -84,7 +90,6 @@
             </div>
         </div>
         <div class="row">
-
             <input type="submit" value="Next>" class="btn btn-primary">
         </div>
     </div>

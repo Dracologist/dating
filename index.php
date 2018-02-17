@@ -5,6 +5,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 </head>
 <?php
+$errors = array();
 require_once('vendor/autoload.php');
 $f3 = Base::instance();
 
@@ -13,14 +14,27 @@ $f3->route('GET /', function() {
     echo $view->render('pages/home.html');
 });
 
-$f3->route('GET|POST /personal-info', function($f3) {
-    $view = new Template;
-    echo $view->render('pages/personal-info.html');
-});
-
-$f3->route('GET|POST /profile', function($f3) {
+$f3->route('GET|POST /profile', function() {
     $view = new Template;
     echo $view->render('pages/profile.html');
+});
+
+$f3->route('GET|POST /submit-profile', function($f3) {
+    $view = new Template;
+    include('validation/validate.php');
+    if(empty($f3->get('errors'))){
+        if($f3->get('premium')){
+            echo $view->render('pages/interests.html');
+        }
+        else{
+            echo $view->render('pages/summary.html');
+        }
+    }
+
+    else{
+        echo $view->render('pages/profile.html');
+    }
+
 });
 
 $f3->route('GET|POST /interests', function($f3) {
