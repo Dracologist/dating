@@ -1,5 +1,5 @@
 {
-  "name": "ekanzler/[FOLDER NAME HERE]",
+  "name": "ekanzler/dating",
   "authors": [
     {
       "name": "Elizabeth Kanzler",
@@ -8,5 +8,8 @@
   ],
   "require": {
     "bcosca/fatfree-core": "dev-master"
+  },
+  "autoload": {
+    "psr-4": { "": "classes/" }
   }
 }
