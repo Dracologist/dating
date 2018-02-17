@@ -8,8 +8,6 @@ class ComposerStaticInit1ea0eb4bbcb1a5624d5d55950d685941
 {
     public static $files = array (
         '2a61bdb9f915e476770176e9ef529836' => __DIR__ . '/../..' . '/validation/validate.php',
-        'a725f9f2f42fc412d87ec267728cad27' => __DIR__ . '/../..' . '/classes/Member.php',
-        '89e88a9731cc32a223fb56a2319cbe35' => __DIR__ . '/../..' . '/classes/PremiumMember.php',
     );
 
     public static $classMap = array (
@@ -38,7 +36,9 @@ class ComposerStaticInit1ea0eb4bbcb1a5624d5d55950d685941
         'Magic' => __DIR__ . '/..' . '/bcosca/fatfree-core/magic.php',
         'Markdown' => __DIR__ . '/..' . '/bcosca/fatfree-core/markdown.php',
         'Matrix' => __DIR__ . '/..' . '/bcosca/fatfree-core/matrix.php',
+        'Member' => __DIR__ . '/../..' . '/classes/Member.php',
         'Prefab' => __DIR__ . '/..' . '/bcosca/fatfree-core/base.php',
+        'PremiumMember' => __DIR__ . '/../..' . '/classes/PremiumMember.php',
         'Preview' => __DIR__ . '/..' . '/bcosca/fatfree-core/base.php',
         'Registry' => __DIR__ . '/..' . '/bcosca/fatfree-core/base.php',
         'SMTP' => __DIR__ . '/..' . '/bcosca/fatfree-core/smtp.php',
