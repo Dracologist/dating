@@ -9,21 +9,10 @@
     <form method="post" action="submit-profile">
         <div class="row">
             <div class="col-sm-6">
-                <h4>First Name</h4>
-                <check if="{{isset(@errors['fname'])}}"><p>{{@errors['fname']}}</p></check>
-                <input type="text" name="fname" value="{{@SESSION.fname}}">
-                <h4>Last Name</h4>
-                <check if="{{isset(@errors['lname'])}}"><p>{{@errors['lname']}}</p></check>
-                <input type="text" name="lname" value="{{@SESSION.lname}}">
-                <h4>Age </h4>
-                <check if="{{isset(@errors['age'])}}"><p>{{@errors['age']}}</p></check>
-                <input type="text" name="age" value="{{@age}}">
-                <h4>Gender</h4>
-                <input type="radio" name="gender" value="male" <check if="{{@SESSION.gender == male}}">selected</check>> Male<br>
-                <input type="radio" name="gender" value="female" <check if="{{@SESSION.gender == female}}">selected</check>> Female
                 <h4>Seeking</h4>
-                <input type="radio" name="seeking" value="male" <check if="{{@SESSION.seeking == male}}">selected</check>> Male<br>
-                <input type="radio" name="seeking" value="female" <check if="{{@SESSION.seeking == female}}">selected</check>> Female
+                <check if="{{isset(@SESSION.errors['seeking'])}}"><p>{{@SESSION.errors['seeking']}}</p></check>
+                <input type="radio" name="seeking" value="male" <check if="{{@SESSION.member->getSeeking() == 'male'}}">checked</check>> Male<br>
+                <input type="radio" name="seeking" value="female" <check if="{{@SESSION.member->getSeeking() == 'female'}}">checked</check>> Female
                 <h4>State</h4>
                 <select name="state">
                     <option value="AL">Alabama</option>
@@ -78,17 +67,14 @@
                     <option value="WI">Wisconsin</option>
                     <option value="WY">Wyoming</option>
                 </select>
-                <h4>Phone</h4>
-                <check if="{{isset(@errors['phone'])}}"><p>{{@errors['phone']}}</p></check>
-                <input type="tel" name="phone" value="{{@SESSION.phone}}">
                 <h4>Email</h4>
-                <input type="text" name="email" value="{{@SESSION.email}}">
-                <h4>Premium Account</h4>
-                <label><input type="checkbox" name="premium"> Sign me up for a premium account!</label>
+                <check if="{{isset(@SESSION.errors['email'])}}"><p>{{@SESSION.errors['email']}}</p></check>
+                <input type="text" name="email" value="{{@SESSION.member->getEmail()}}">
             </div>
             <div class="col-sm-6">
                 <h4>Biography</h4>
-                <textarea name="bio">{{@SESSION.bio}}</textarea>
+                <check if="{{isset(@SESSION.errors['bio'])}}"><p>{{@SESSION.errors['bio']}}</p></check>
+                <textarea name="bio">{{@SESSION.member->getBio()}}</textarea>
             </div>
         </div>
         <div class="row">

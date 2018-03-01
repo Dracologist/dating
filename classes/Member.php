@@ -46,28 +46,28 @@ class Member
     protected $bio;
 
     /**
+     * @return the
+     */
+    public function getLname()
+    {
+        return $this->lname;
+    }
+
+    /**
      * Member constructor.
      * @param $first the first name of the member
      * @param $last the last name of the member
      * @param $years the age of the member
      * @param $sex the gender of the member
      * @param $number the phone number of the member
-     * @param $address the email address of the member
-     * @param $home the state of the member
-     * @param $wants the gender the member is seeking
-     * @param $biography the bio of the member
      */
-    function __construct($first, $last, $years, $sex, $number, $address, $home, $wants, $biography)
+    function __construct($first, $last, $years, $sex, $number)
     {
         $this->fname = $first;
         $this->lname = $last;
         $this->age = $years;
         $this->gender = $sex;
         $this->phone = $number;
-        $this->email= $number;
-        $this->state = $home;
-        $this->seeking = $wants;
-        $this->bio = $biography;
     }
 
     /**
@@ -140,6 +140,86 @@ class Member
     public function getBio()
     {
         return $this->bio;
+    }
+
+    /**
+     * @param the $lname
+     */
+    public function setLname($lname)
+    {
+        $this->lname = $lname;
+    }
+
+    /**
+     * @param the $age
+     */
+    public function setAge($age)
+    {
+        $this->age = $age;
+    }
+
+    /**
+     * @param the $gender
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+    }
+
+    /**
+     * @param the $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @param the $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @param the $state
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @param the $seeking
+     */
+    public function setSeeking($seeking)
+    {
+        $this->seeking = $seeking;
+    }
+
+    /**
+     * @param the $bio
+     */
+    public function setBio($bio)
+    {
+        $this->bio = $bio;
+    }
+
+    /**
+     * @return the
+     */
+    public function getFname()
+    {
+        return $this->fname;
+    }
+
+    /**
+     * @param the $fname
+     */
+    public function setFname($fname)
+    {
+        $this->fname = $fname;
     }
 
 }

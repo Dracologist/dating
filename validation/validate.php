@@ -1,15 +1,14 @@
 <?php
-function validName($fname, $lname, $f3){
+function validName($fname, $lname){
     if(!ctype_alpha($fname)){
         $errors['fname'] = "Invalid first name!";
     }
     if(!ctype_alpha($lname)){
         $errors['lname'] = "Invalid last name!";
     }
-    $f3->set('errors', $errors);
     return ctype_alpha($fname) && ctype_alpha($lname);
 }
-function validAge($age, $f3){
+function validAge($age){
     $valid = true;
     if(!is_numeric($age)){
         $errors['age'] = "Age must be a number!";
@@ -19,23 +18,20 @@ function validAge($age, $f3){
         $errors['age'] = "You must be 18 or older to sign up!";
         $valid = false;
     }
-    $f3->set('errors', $errors);
     return $valid;
 }
 
-function validPhone($phone, $f3){
+function validPhone($phone){
     if(!is_numeric($phone)){
         $errors['phone'] = "Invalid phone number!";
-        $f3->set('errors', $errors);
         return false;
     }
     else{
-        $f3->set('errors', $errors);
         return true;
     }
 }
 
-function validIndoor($indoor, $validList, $f3){
+function validIndoor($indoor, $validList){
     $valid = true;
     foreach ($indoor as $activity){
         if(!in_array($activity, $validList)){
@@ -43,11 +39,10 @@ function validIndoor($indoor, $validList, $f3){
             $valid = false;
         }
     }
-    $f3->set('errors', $errors);
     return $valid;
 }
 
-function validOutdoor($outdoor, $validList, $f3){
+function validOutdoor($outdoor, $validList){
     $valid = true;
     foreach ($outdoor as $activity){
         if(!in_array($activity, $validList)){
@@ -55,6 +50,5 @@ function validOutdoor($outdoor, $validList, $f3){
             $valid = false;
         }
     }
-    $f3->set('errors', $errors);
     return $valid;
 }

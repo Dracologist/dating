@@ -18,28 +18,23 @@ class PremiumMember extends Member
     private $_outdoorInterests;
 
     /**
-     * PremiumMember constructor.
-     * @param $first the first name of the member
-     * @param $last the last name of the member
-     * @param $years the age of the member
-     * @param $sex the gender of the member
-     * @param $number the phone number of the member
-     * @param $address the email address of the member
-     * @param $home the state of the member
-     * @param $wants the gender the member is seeking
-     * @param $biography the bio of the member
-     * @param $in the indoor interests of the member
-     * @param $out the outdoor interests of the member
+     * @return array
      */
-    function __construct($first, $last, $years, $sex, $number, $address, $home, $wants, $biography, $in, $out)
+    public function getOutdoorInterests()
     {
-        parent::__construct($first, $last, $years, $sex, $number, $address, $home, $wants, $biography);
-        $this->_indoorInterests = $in;
-        $this->_outdoorInterests = $out;
+        return $this->_outdoorInterests;
     }
 
     /**
-     * @return array
+     * @param array $indoorInterests
+     */
+    public function setIndoorInterests($indoorInterests)
+    {
+        $this->_indoorInterests = $indoorInterests;
+    }
+
+    /**
+     * @return array $indoorInterests
      */
     public function getIndoorInterests()
     {

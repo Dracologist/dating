@@ -9,13 +9,13 @@
 <form action="submit-interests" method="post">
     <fieldset>
         <legend>Indoor</legend>
-        <?php foreach (($SESSION['indoorOptions']?:[]) as $indoorActivity): ?>
+        <?php foreach (($indoorOptions?:[]) as $indoorActivity): ?>
             <label><input type="checkbox" name="indoor[]" value="<?= ($indoorActivity) ?>"> <?= ($indoorActivity) ?></label>
         <?php endforeach; ?>
     </fieldset>
     <fieldset>
         <legend>Outdoor</legend>
-        <?php foreach (($SESSION['outdoorOptions']?:[]) as $outdoorActivity): ?>
+        <?php foreach (($outdoorOptions?:[]) as $outdoorActivity): ?>
             <label><input type="checkbox" name="outdoor[]" value="<?= ($outdoorActivity) ?>"> <?= ($outdoorActivity) ?></label>
         <?php endforeach; ?>
     </fieldset>

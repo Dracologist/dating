@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Personal Info</title>
+</head>
+<body>
+<div class="container">
+    <form method="post" action="submit-personal-info">
+        <div class="row">
+            <div class="col-sm-6">
+                <h4>First Name</h4>
+                <check if="{{isset(@SESSION.errors['fname'])}}"><p>{{@SESSION.errors['fname']}}</p></check>
+                <input type="text" name="fname" <check if="{{isset(@SESSION.member)}}">value='{{@SESSION.member->getFname()}}'</check>>
+                <h4>Last Name</h4>
+                <check if="{{isset(@SESSION.errors['lname'])}}"><p>{{@SESSION.errors['lname']}}</p></check>
+                <input type="text" name="lname" <check if="{{isset(@SESSION.member)}}">value='{{@SESSION.member->getLname()}}'</check>>
+                <h4>Age </h4>
+                <check if="{{isset(@SESSION.errors['age'])}}"><p>{{@SESSION.errors['age']}}</p></check>
+                <input type="text" name="age" <check if="{{isset(@SESSION.member)}}">value='{{@SESSION.member->getAge()}}'</check>>
+                <h4>Gender</h4>
+                <check if="{{isset(@SESSION.errors['gender'])}}"><p>{{@SESSION.errors['gender']}}</p></check>
+                <input type="radio" name="gender" value="male" <check if="{{isset(@SESSION.member)}}"><check if="{{@SESSION.member->getGender() == 'male'}}">checked</check></check>> Male<br>
+                <input type="radio" name="gender" value="female" <check if="{{isset(@SESSION.member)}}"><check if="{{@SESSION.member->getGender() == 'female'}}">checked</check></check>selected</check>> Female
+                <h4>Phone</h4>
+                <check if="{{isset(@SESSION.errors['phone'])}}"><p>{{@SESSION.errors['phone']}}</p></check>
+                <input type="tel" name="phone" <check if="{{isset(@SESSION.member)}}">value='{{@SESSION.member->getPhone()}}'</check>>
+                <h4>Premium Account</h4>
+                <label><input type="checkbox" name="premium" <check if="{{@SESSION.premium}}">checked</check>> Sign me up for a premium account!</label>
+            </div>
+        </div>
+        <div class="row">
+            <input type="submit" value="Next>" class="btn btn-primary">
+        </div>
+</div>
+</form>
+</div>
+</body>
+</html>
