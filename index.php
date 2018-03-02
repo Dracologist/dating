@@ -15,10 +15,10 @@ session_save_path("/tmp/cache");
     <nav class="navbarnavbar-light bg-light">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/">User</a>
+                <a class="nav-link" href="http://ekanzler.greenriverdev.com/328/dating">User</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="admin">Admin</a>
+                <a class="nav-link" href="http://ekanzler.greenriverdev.com/328/dating/admin">Admin</a>
             </li>
         </ul>
     </nav>
@@ -225,6 +225,17 @@ $f3->route('GET /admin', function($f3, $dbh) {
     $template = new Template;
     $sql = 'SELECT * FROM member';
     $statement = $dbh->prepare($sql);
+    $f3->set('SESSION.members', $statement->fetchAll(PDO::FETCH_ASSOC));
+    echo $template->render('views/admin.html');
+});
+
+$f3->route('GET /@id', function($f3, $dbh) {
+    $template = new Template;
+    $sql = 'SELECT * FROM member WHERE member_id = :id';
+    $statement = $dbh->prepare($sql);
+    $memberID = $f3->get('PARAMS.id');
+    $statement->bindParam(":id", $memberID, PDO::PARAM_INT);
+    $f3->set('SESSION.viewMember', $statement->fetch(PDO::FETCH_ASSOC));
     echo $template->render('views/admin.html');
 });
 

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div class="col">
+        <p><b>ID:</b> {{@SESSION.viewMember['member_id']}}</p>
+        <p><b>First Name:</b> {{@SESSION.viewMember['fname']}}</p>
+        <p><b>Last Name:</b> {{@SESSION.viewMember['lname']}}</p>
+        <p><b>Age:</b> {{@SESSION.viewMember['age']}}</p>
+        <p><b>Gender:</b> {{@SESSION.viewMember['gender']}}</p>
+        <p><b>Phone Number:</b> {{@SESSION.viewMember['phone']}}</p>
+        <p><b>Email:</b> {{@SESSION.viewMember['email']}}</p>
+        <p><b>State:</b> {{@SESSION.viewMember['state']}}</p>
+        <p><b>Seeking:</b> {{@SESSION.viewMember['seeking']}}</p>
+        <check if="{{@SESSION.viewMember['premium']}}">
+            <p><b>Interests:</b> {{@SESSION.viewMember['interests']}}</p>
+        </check>
+    </div>
+    <div class="col">
+        <check if="{{@SESSION.viewMember['premium']}}">
+            <check if="{{@SESSION.viewMember['image']}} != null}}">
+                <img src="{{@SESSION.viewMember['image']}}" title="{{@SESSION.viewMember['image']}}"  class="rounded">
+            </check>
+        </check>
+        <blockquote><b>Biography:</b> {{@SESSION.viewMember['bio']}}</blockquote>
+    </div>
+</div>
+</body>
+</html>

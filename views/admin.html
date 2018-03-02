@@ -21,9 +21,19 @@
             <th>Gender</th>
             <th>Seeking</th>
             <th>Premium</th>
+            <th>Profile Image</th>
             <th>Interests</th>
         </tr>
         </thead>
+        <tbody>
+        <repeat group="{{@SESSION.members}}" value="{{@currentMember}}">
+            <a href="{{@currentMember['member_id']}}">
+                <tr>
+                    <repeat group="{{@currentMember}}" value="{{@info}}"><td>{{@info}}</td></repeat>
+                </tr>
+            </a>
+        </repeat>
+        </tbody>
     </table>
 </div>
 </body>
