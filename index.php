@@ -10,25 +10,19 @@ session_save_path("/tmp/cache");
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 </head>
+<body>
+<div class="container">
+    <nav class="navbarnavbar-light bg-light">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">User</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin">Admin</a>
+            </li>
+        </ul>
+    </nav>
 <?php
-
-/*
- * CREATE TABLE member (
-    member_id int(9) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    fname varchar(25) NOT NULL,
-    lname varchar(25) NOT NULL,
-    age int(3) NOT NULL,
-    gender varchar(6) NOT NULL,
-    phone varchar(14) NOT NULL,
-    email varchar(25) NOT NULL,
-    state varchar(20) NOT NULL,
-    seeking varchar(6) NOT NULL,
-    bio varchar(600) NOT NULL,
-    premium tinyint NOT NULL,
-    image varchar(60),
-    interests varchar(60)
-    );
- */
 
 $f3 = Base::instance();
 
@@ -39,6 +33,14 @@ new Session();
 $f3->set('indoorOptions', array("Watching TV", "Reading", "Napping", "Internet", "Video games", "Music"));
 $f3->set('outdoorOptions', array("Walking", "Hiking", "Running", "Bird watching", "Swimming", "Sports"));
 
+require '/home/ekanzler/connect.php';
+try {
+    $dbh = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+    echo 'Connected to database';
+}
+catch(PDOException $e) {
+    echo $e->getMessage();
+}
 
 $f3->route('GET /', function() {
     $view = new View();
@@ -151,9 +153,82 @@ $f3->route('POST /submit-interests', function($f3) {
     echo $template->render($file);
 });
 
-$f3->route('GET|POST /finalize', function($f3) {
+$f3->route('GET|POST /finalize', function($f3, $dbh) {
+    /*
+     * CREATE TABLE member (
+        member_id int(9) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        fname varchar(25) NOT NULL,
+        lname varchar(25) NOT NULL,
+        age int(3) NOT NULL,
+        gender varchar(6) NOT NULL,
+        phone varchar(14) NOT NULL,
+        email varchar(25) NOT NULL,
+        state varchar(20) NOT NULL,
+        seeking varchar(6) NOT NULL,
+        bio varchar(600) NOT NULL,
+        premium tinyint NOT NULL,
+        image varchar(60),
+        interests varchar(60)
+        );
+     */
     $template = new Template;
+    $cols = array("fname"=>$f3->get('SESSION.member')->getFname(),
+        "lname"=>$f3->get('SESSION.member')->getLname(), "age"=>$f3->get('SESSION.member')->getAge(),
+        "gender"=>$f3->get('SESSION.member')->getGender(), "phone"=>$f3->get('SESSION.member')->getPhone(),
+        "email"=>$f3->get('SESSION.member')->getEmail(), "state"=>$f3->get('SESSION.member')->getState(),
+        "seeking"=>$f3->get('SESSION.member')->getSeeking(), "bio"=>$f3->get('SESSION.member')->getBio(),
+        "premium"=>$f3->get('SESSION.premium'));
+    $types  = array("fname"=>PDO::PARAM_STR, "lname"=>PDO::PARAM_STR, "age"=>PDO::PARAM_INT,
+        "gender"=>PDO::PARAM_STR, "phone"=>PDO::PARAM_STR, "email"=>PDO::PARAM_STR, "state"=>PDO::PARAM_STR,
+        "seeking"=>PDO::PARAM_STR, "bio"=>PDO::PARAM_STR, "premium"=>PDO::PARAM_BOOL);
+    if($f3->get('SESSION.premium')){
+        $cols['image'] = $f3->get('SESSION.member')->getProfilePic();
+        $types['image'] = PDO::PARAM_STR;
+        $interests = "";
+        foreach ($f3->get('SESSION.member')->getOutdoorInterests() as $outdoorInterest){
+            $interests .= $outdoorInterest;
+            if(end($f3->get('SESSION.member')->getOutdoorInterests()) != $outdoorInterest ||
+                $f3->get('SESSION.member')->getIndoorInterests() != null) {
+                $interests .= ", ";
+            }
+        }
+        foreach ($f3->get('SESSION.member')->getIndoorInterests() as $indoorInterest){
+            $interests .= $indoorInterest;
+            if(end($f3->get('SESSION.member')->getIndoorInterests()) != $indoorInterest) {
+                $interests .= ", ";
+            }
+        }
+        $cols['interests'] = $interests;
+        $types['interests'] = PDO::PARAM_STR;
+    }
+    $fields = "";
+    $values = "";
+    foreach ($cols as $name=>$val){
+        $fields .= $val;
+        $values .= ":".$val;
+        if($val != end($cols)){
+            $fields .= ", ";
+            $values .= ", ";
+        }
+    }
+    $sql = 'INSERT INTO member('.$fields.') VALUES('.$values.')';
+    $statement = $dbh->prepare($sql);
+    foreach ($cols as $key => &$value){
+        $statement->bindParam(":".$key, $value, $types[$key]);
+    }
+    $statement->execute();
+    echo "<p>Member added to database!</p>";
     echo $template->render('views/summary.html');
 });
 
+$f3->route('GET /admin', function($f3, $dbh) {
+    $template = new Template;
+    $sql = 'SELECT * FROM member';
+    $statement = $dbh->prepare($sql);
+    echo $template->render('views/admin.html');
+});
+
 $f3->run();
+?>
+</div>
+</body>
