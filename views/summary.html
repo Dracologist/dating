@@ -30,16 +30,16 @@
                 </check>
             </p>
         </check>
-        <a href="finalize" class="btn btn-primary">Finish</a>
     </div>
     <div class="col">
         <check if="{{@SESSION.premium}}">
             <check if="{{@SESSION.member->getProfilePic() != null}}">
-                <img src="{{@SESSION.member->getProfilePic()}}" title="{{@SESSION.member->getProfilePic()}}"  class="rounded">
+                <img src="{{@SESSION.member->getProfilePic()}}" title="{{@SESSION.member->getProfilePic()}}"  class="rounded" id="profile-pic">
             </check>
         </check>
-        <blockquote><b>Biography:</b> {{@SESSION.member->getBio()}}</blockquote>
+        <p id="bio"><b>Biography:</b><br> {{@SESSION.member->getBio()}}</p>
     </div>
+    <a href="finalize" class="btn btn-primary">Finish</a>
 </div>
 
 </body>

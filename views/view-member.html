@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Member #{{@viewMember['member_id']}}</title>
+</head>
+<body>
+<div class="container">
+    <repeat group="{{@viewMember}}" key="{{@key}}" value="{{@val}}">
+        <p id="{{@key}}">
+            <b>{{@key}}:</b>
+            <check if='{{@key == "image"}}'>
+                <true>
+                    <br>
+                    <img src="{{@val}}" title="{{@val}}" class="rounded" id="profile-pic">
+                </true>
+                <false>
+                    {{@val}}
+                </false>
+            </check>
+        </p>
+    </repeat>
+</div>
+</body>
+</html>

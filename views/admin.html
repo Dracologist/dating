@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin View</title>
-    <link rel="stylesheet" href='//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.min.css">
 </head>
 <body>
 <div class="container">
-    <table id="members" class="display table-striped" >
+    <table id="members" class="table table-striped" >
         <thead>
         <tr>
             <th>ID</th>
@@ -23,13 +21,15 @@
             <th>Premium</th>
             <th>Profile Image</th>
             <th>Interests</th>
+            <th>Profile</th>
         </tr>
         </thead>
         <tbody>
         <repeat group="{{@members}}" value="{{@currentMember}}">
-                <tr>
-                    <repeat group="{{@currentMember}}" value="{{@info}}"><td>{{@info}}</td></repeat>
-                </tr>
+            <tr>
+                <repeat group="{{@currentMember}}" value="{{@info}}"><td>{{@info}}</td></repeat>
+                <td><a href="view-{{@currentMember['member_id']}}">View</a></td>
+            </tr>
         </repeat>
         </tbody>
     </table>

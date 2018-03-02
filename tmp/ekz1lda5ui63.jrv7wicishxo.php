@@ -30,16 +30,16 @@
                 <?php endif; ?>
             </p>
         <?php endif; ?>
-        <a href="finalize" class="btn btn-primary">Finish</a>
     </div>
     <div class="col">
         <?php if ($SESSION['premium']): ?>
             <?php if ($SESSION['member']->getProfilePic() != null): ?>
-                <img src="<?= ($SESSION['member']->getProfilePic()) ?>" title="<?= ($SESSION['member']->getProfilePic()) ?>"  class="rounded">
+                <img src="<?= ($SESSION['member']->getProfilePic()) ?>" title="<?= ($SESSION['member']->getProfilePic()) ?>"  class="rounded" id="profile-pic">
             <?php endif; ?>
         <?php endif; ?>
-        <blockquote><b>Biography:</b> <?= ($SESSION['member']->getBio()) ?></blockquote>
+        <p id="bio"><b>Biography:</b><br> <?= ($SESSION['member']->getBio()) ?></p>
     </div>
+    <a href="finalize" class="btn btn-primary">Finish</a>
 </div>
 
 </body>

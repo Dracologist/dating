@@ -1,3 +1,8 @@
-blockquote{
+blockquote {
     font-style: italic;
+}
+
+#profile-pic {
+    max-height: 15%;
+    max-width: 15%;
 }
