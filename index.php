@@ -47,7 +47,7 @@ $f3->set('outdoorOptions', array("Walking", "Hiking", "Running", "Bird watching"
         bio varchar(600) NOT NULL,
         premium tinyint NOT NULL,
         image varchar(60),
-        interests varchar(60)
+        interests varchar(600)
         );
      */
 
