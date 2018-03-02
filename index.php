@@ -234,7 +234,7 @@ $f3->route('GET|POST /finalize', function($f3) {
 $f3->route('GET /admin', function($f3) {
     $template = new Template;
     $dbh = $f3->get('pdo');
-    $sql = 'SELECT * FROM member';
+    $sql = 'SELECT * FROM member ORDER BY lname';
     $statement = $dbh->prepare($sql);
     $statement->execute();
     $f3->set('members', $statement->fetchAll(PDO::FETCH_ASSOC));
