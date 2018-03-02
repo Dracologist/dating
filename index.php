@@ -12,6 +12,24 @@ session_save_path("/tmp/cache");
 </head>
 <?php
 
+/*
+ * CREATE TABLE member (
+    member_id int(9) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    fname varchar(25) NOT NULL,
+    lname varchar(25) NOT NULL,
+    age int(3) NOT NULL,
+    gender varchar(6) NOT NULL,
+    phone varchar(14) NOT NULL,
+    email varchar(25) NOT NULL,
+    state varchar(20) NOT NULL,
+    seeking varchar(6) NOT NULL,
+    bio varchar(600) NOT NULL,
+    premium tinyint NOT NULL,
+    image varchar(60),
+    interests varchar(60)
+    );
+ */
+
 $f3 = Base::instance();
 
 $f3->set('CACHE', true);
@@ -120,7 +138,7 @@ $f3->route('POST /submit-interests', function($f3) {
     echo $template->render($file);
 });
 
-$f3->route('GET|POST /summary', function($f3) {
+$f3->route('GET|POST /finalize', function($f3) {
     $template = new Template;
     echo $template->render('views/summary.html');
 });
