@@ -19,6 +19,7 @@
             <th>Email</th>
             <th>State</th>
             <th>Seeking</th>
+            <th>Bio</th>
             <th>Premium</th>
             <th>Profile Image</th>
             <th>Interests</th>
