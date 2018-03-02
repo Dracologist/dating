@@ -57,7 +57,7 @@ class Member
      * Member constructor.
      * @param $first the first name of the member
      * @param $last the last name of the member
-     * @param $years the age of the member (must be 18 or over)
+     * @param $years the age of the member (must be a number 18 or over)
      * @param $sex the gender of the member
      * @param $number the phone number of the member
      */
@@ -65,7 +65,7 @@ class Member
     {
         $this->fname = $first;
         $this->lname = $last;
-        if($years >= 18) {
+        if($years >= 18 && preg_match('\d+', $years)) {
             $this->age = $years;
         }
         $this->gender = $sex;
@@ -154,12 +154,12 @@ class Member
 
     /**
      * Sets the age of the member.
-     * Age must be greater than or equal to 18.
+     * Age must be a number greater than or equal to 18.
      * @param int the age of the member
      */
     public function setAge($age)
     {
-        if($age >= 18) {
+        if($age >= 18 && preg_match('\d+', $age)) {
             $this->age = $age;
         }
     }
