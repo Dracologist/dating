@@ -18,12 +18,16 @@
         <?php if ($SESSION['premium']): ?>
             <p>
                 <b>Interests:</b>
+                <?php if (!empty($SESSION['member']->getOutdoorInterests())): ?>
                 <?php foreach (($SESSION['member']->getOutdoorInterests()?:[]) as $outdoorInterest): ?>
                     <?= ($outdoorInterest) ?><?php if ($outdoorInterest != end($SESSION['member']->getOutdoorInterests()) || $SESSION['member']->getIndoorInterests() != null): ?>,<?php endif; ?>
                 <?php endforeach; ?>
+                <?php endif; ?>
+                <?php if (!empty($SESSION['member']->getIndoorInterests())): ?>
                 <?php foreach (($SESSION['member']->getIndoorInterests()?:[]) as $indoorInterest): ?>
                     <?= ($indoorInterest) ?><?php if ($indoorInterest != end($SESSION['member']->getIndoorInterests())): ?>,<?php endif; ?>
                 <?php endforeach; ?>
+                <?php endif; ?>
             </p>
         <?php endif; ?>
         <a href="finalize" class="btn btn-primary">Finish</a>

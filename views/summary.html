@@ -18,12 +18,16 @@
         <check if="{{@SESSION.premium}}">
             <p>
                 <b>Interests:</b>
+                <check if="{{!empty(@SESSION.member->getOutdoorInterests())}}">
                 <repeat group="{{@SESSION.member->getOutdoorInterests()}}" value="{{@outdoorInterest}}">
                     {{@outdoorInterest}}<check if="{{@outdoorInterest != end(@SESSION.member->getOutdoorInterests())}} || @SESSION.member->getIndoorInterests() != null">,</check>
                 </repeat>
+                </check>
+                <check if="{{!empty(@SESSION.member->getIndoorInterests())}}">
                 <repeat group="{{@SESSION.member->getIndoorInterests()}}" value="{{@indoorInterest}}">
                     {{@indoorInterest}}<check if="{{@indoorInterest != end(@SESSION.member->getIndoorInterests())}}">,</check>
                 </repeat>
+                </check>
             </p>
         </check>
         <a href="finalize" class="btn btn-primary">Finish</a>

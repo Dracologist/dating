@@ -1,6 +1,5 @@
 <?php
 require_once('vendor/autoload.php');
-require '/home/ekanzler/connect.php';
 session_start();
 session_save_path("/tmp/cache");
 ?>
@@ -15,7 +14,7 @@ session_save_path("/tmp/cache");
     <nav class="navbarnavbar-light bg-light">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="">User</a>
+                <a class="nav-link" href="/328/dating">User</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="admin">Admin</a>
@@ -50,8 +49,13 @@ $f3->set('outdoorOptions', array("Walking", "Hiking", "Running", "Bird watching"
         interests varchar(600)
         );
      */
-
-$dbh = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+require '/home/ekanzler/connect.php';
+try {
+    $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $e) {
+    echo $e->getMessage();
+}
 
 $f3->set('pdo', $dbh);
 
@@ -169,6 +173,7 @@ $f3->route('POST /submit-interests', function($f3) {
 $f3->route('GET|POST /finalize', function($f3) {
     $template = new Template;
     $dbh = $f3->get('pdo');
+    $member = $f3->get('SESSION.member');
     $cols = array("fname"=>$f3->get('SESSION.member')->getFname(),
         "lname"=>$f3->get('SESSION.member')->getLname(), "age"=>$f3->get('SESSION.member')->getAge(),
         "gender"=>$f3->get('SESSION.member')->getGender(), "phone"=>$f3->get('SESSION.member')->getPhone(),
@@ -182,17 +187,21 @@ $f3->route('GET|POST /finalize', function($f3) {
         $cols['image'] = $f3->get('SESSION.member')->getProfilePic();
         $types['image'] = PDO::PARAM_STR;
         $interests = "";
-        foreach ($f3->get('SESSION.member')->getOutdoorInterests() as $outdoorInterest){
-            $interests .= $outdoorInterest;
-            if(end($f3->get('SESSION.member')->getOutdoorInterests()) != $outdoorInterest ||
-                $f3->get('SESSION.member')->getIndoorInterests() != null) {
-                $interests .= ", ";
+        if($f3->get('SESSION.member')->getOutdoorInterests() != null) {
+            foreach ($f3->get('SESSION.member')->getOutdoorInterests() as $outdoorInterest) {
+                $interests .= $outdoorInterest;
+                if (end($f3->get('SESSION.member')->getOutdoorInterests()) != $outdoorInterest ||
+                    $f3->get('SESSION.member')->getIndoorInterests() != null) {
+                    $interests .= ", ";
+                }
             }
         }
-        foreach ($f3->get('SESSION.member')->getIndoorInterests() as $indoorInterest){
-            $interests .= $indoorInterest;
-            if(end($f3->get('SESSION.member')->getIndoorInterests()) != $indoorInterest) {
-                $interests .= ", ";
+        if($f3->get('SESSION.member')->getIndoorInterests() != null) {
+            foreach ($f3->get('SESSION.member')->getIndoorInterests() as $indoorInterest) {
+                $interests .= $indoorInterest;
+                if (end($f3->get('SESSION.member')->getIndoorInterests()) != $indoorInterest) {
+                    $interests .= ", ";
+                }
             }
         }
         $interests .= "";
@@ -212,13 +221,12 @@ $f3->route('GET|POST /finalize', function($f3) {
         $fields .= $name;
         $values .= ":".$name;
     }
-    $sql = "INSERT INTO member(".$fields.") VALUES(".$values.")";
+    $sql = 'INSERT INTO member('.$fields.') VALUES('.$values.')';
     $statement = $dbh->prepare($sql);
     foreach ($cols as $key => &$value){
         $statement->bindParam(":".$key, $value, $types[$key]);
     }
     $statement->execute();
-    $f3->set('pdo', $dbh);
     echo "<p>Member added to database!</p>";
     echo $template->render('views/summary.html');
 });
@@ -230,7 +238,12 @@ $f3->route('GET /admin', function($f3) {
     $statement = $dbh->prepare($sql);
     $statement->execute();
     $f3->set('members', $statement->fetchAll(PDO::FETCH_ASSOC));
-    $f3->set('pdo', $dbh);
+    echo $template->render('views/admin.html');
+});
+
+$f3->route('GET /end', function($f3) {
+    $template = new Template;
+    session_destroy();
     echo $template->render('views/admin.html');
 });
 

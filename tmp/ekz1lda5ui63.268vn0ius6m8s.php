@@ -18,7 +18,6 @@
             <th>Gender</th>
             <th>Email</th>
             <th>State</th>
-            <th>Gender</th>
             <th>Seeking</th>
             <th>Premium</th>
             <th>Profile Image</th>
@@ -27,11 +26,9 @@
         </thead>
         <tbody>
         <?php foreach (($members?:[]) as $currentMember): ?>
-            <a href="<?= ($currentMember['member_id']) ?>">
                 <tr>
                     <?php foreach (($currentMember?:[]) as $info): ?><td><?= ($info) ?></td><?php endforeach; ?>
                 </tr>
-            </a>
         <?php endforeach; ?>
         </tbody>
     </table>
