@@ -105,6 +105,21 @@ $f3->route('POST /submit-profile', function($f3) {
     } else {
         $errors['email'] = "Please enter your email";
     }
+    if(isset($_FILES['profilePic'])) {
+        if($member->getProfilePic() != null) {
+            $path = $member->getProfilePic();
+        } else {
+            $name = $f3->get('SESSION.member')->getFname().
+                "-".$f3->get('SESSION.member')->getLname();
+            $extension = "." . pathinfo($_FILES['profilePic']['name'],PATHINFO_EXTENSION);
+            if(file_exists("images/".$name.$extension)){
+                $name .= "(1)";
+            }
+            $path = "images/".$name.$extension;
+        }
+        move_uploaded_file($_FILES['profilePic']['tmp_name'], $path);
+        $member->setProfilePic($path);
+    }
     $f3->set('SESSION.errors', $errors);
     if(empty($f3->get('SESSION.errors'))) {
         if($f3->get('SESSION.premium')){

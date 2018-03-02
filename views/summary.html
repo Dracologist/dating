@@ -5,25 +5,38 @@
     <title>Title</title>
 </head>
 <body>
-<p><b>First Name:</b> {{@SESSION.member->getFname()}}</p>
-<p><b>Last Name:</b> {{@SESSION.member->getLname()}}</p>
-<p><b>Age:</b> {{@SESSION.member->getAge()}}</p>
-<p><b>Gender:</b> {{@SESSION.member->getGender()}}</p>
-<p><b>Phone Number:</b> {{@SESSION.member->getPhone()}}</p>
-<p><b>Email:</b> {{@SESSION.member->getEmail()}}</p>
-<p><b>State:</b> {{@SESSION.member->getState()}}</p>
-<p><b>Seeking:</b> {{@SESSION.member->getSeeking()}}</p>
-<p><b>Biography:</b> {{@SESSION.member->getBio()}}</p>
-<check if="{{@SESSION.premium}}">
-    <p>
-        <b>Indoor Interests:</b>
-        <repeat group="{{@SESSION.member->getIndoorInterests()}}" value="{{@indoorInterest}}"><br>{{@indoorInterest}}</repeat>
-    </p>
-    <p>
-        <b>Outdoor Interests:</b>
-        <repeat group="{{@SESSION.member->getOutdoorInterests()}}" value="{{@outdoorInterest}}"><br>{{@outdoorInterest}}</repeat>
-    </p>
-</check>
-<a href="finalize" class="btn btn-primary">Finish</a>
+<div class="container">
+    <div class="col">
+        <p><b>First Name:</b> {{@SESSION.member->getFname()}}</p>
+        <p><b>Last Name:</b> {{@SESSION.member->getLname()}}</p>
+        <p><b>Age:</b> {{@SESSION.member->getAge()}}</p>
+        <p><b>Gender:</b> {{@SESSION.member->getGender()}}</p>
+        <p><b>Phone Number:</b> {{@SESSION.member->getPhone()}}</p>
+        <p><b>Email:</b> {{@SESSION.member->getEmail()}}</p>
+        <p><b>State:</b> {{@SESSION.member->getState()}}</p>
+        <p><b>Seeking:</b> {{@SESSION.member->getSeeking()}}</p>
+        <check if="{{@SESSION.premium}}">
+            <p>
+                <b>Interests:</b>
+                <repeat group="{{@SESSION.member->getOutdoorInterests()}}" value="{{@outdoorInterest}}">
+                    {{@outdoorInterest}}<check if="{{@outdoorInterest != end(@SESSION.member->getOutdoorInterests())}}">,</check>
+                </repeat>
+                <repeat group="{{@SESSION.member->getIndoorInterests()}}" value="{{@indoorInterest}}">
+                    {{@indoorInterest}}<check if="{{@indoorInterest != end(@SESSION.member->getIndoorInterests())}}">,</check>
+                </repeat>
+            </p>
+        </check>
+        <a href="finalize" class="btn btn-primary">Finish</a>
+    </div>
+    <div class="col">
+        <check if="{{@SESSION.premium}}">
+            <check if="{{@SESSION.member->getProfilePic() != null}}">
+                <img src="{{@SESSION.member->getProfilePic()}}" title="{{@SESSION.member->getProfilePic()}}"  class="rounded">
+            </check>
+        </check>
+        <blockquote><b>Biography:</b> {{@SESSION.member->getBio()}}</blockquote>
+    </div>
+</div>
+
 </body>
 </html>

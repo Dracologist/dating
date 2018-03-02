@@ -16,6 +16,10 @@ class PremiumMember extends Member
      * @var the outdoor interests of the member
      */
     private $_outdoorInterests;
+    /**
+     * @var the path for the profile picture of the member
+     */
+    private $_profilePic;
 
     /**
      * @return array
@@ -47,6 +51,22 @@ class PremiumMember extends Member
     public function setOutdoorInterests($outdoorInterests)
     {
         $this->_outdoorInterests = $outdoorInterests;
+    }
+
+    /**
+     * @return the
+     */
+    public function getProfilePic()
+    {
+        return $this->_profilePic;
+    }
+
+    /**
+     * @param the $profilePic
+     */
+    public function setProfilePic($profilePic)
+    {
+        $this->_profilePic = $profilePic;
     }
 
 

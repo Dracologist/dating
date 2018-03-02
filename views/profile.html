@@ -6,7 +6,7 @@
 </head>
 <body>
 <div class="container">
-    <form method="post" action="submit-profile">
+    <form method="post" action="submit-profile" enctype="multipart/form-data">
         <div class="row">
             <div class="col-sm-6">
                 <h4>Seeking</h4>
@@ -74,7 +74,11 @@
             <div class="col-sm-6">
                 <h4>Biography</h4>
                 <check if="{{isset(@SESSION.errors['bio'])}}"><p>{{@SESSION.errors['bio']}}</p></check>
-                <textarea name="bio">{{@SESSION.member->getBio()}}</textarea>
+                <textarea name="bio" rows="10" cols="30" class="rounded">{{@SESSION.member->getBio()}}</textarea>
+                <check if="{{@SESSION.premium}}">
+                    <h4>Profile Picture</h4>
+                    <input type="file" name="profilePic" accept="image/*">
+                </check>
             </div>
         </div>
         <div class="row">
