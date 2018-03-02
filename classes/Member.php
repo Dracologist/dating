@@ -57,7 +57,7 @@ class Member
      * Member constructor.
      * @param $first the first name of the member
      * @param $last the last name of the member
-     * @param $years the age of the member
+     * @param $years the age of the member (must be 18 or over)
      * @param $sex the gender of the member
      * @param $number the phone number of the member
      */
@@ -65,7 +65,9 @@ class Member
     {
         $this->fname = $first;
         $this->lname = $last;
-        $this->age = $years;
+        if($years >= 18) {
+            $this->age = $years;
+        }
         $this->gender = $sex;
         $this->phone = $number;
     }
@@ -87,7 +89,7 @@ class Member
     }
 
     /**
-     * @return int
+     * @return the
      */
     public function getAge()
     {
@@ -103,7 +105,7 @@ class Member
     }
 
     /**
-     * @return int
+     * @return the
      */
     public function getPhone()
     {
@@ -143,7 +145,7 @@ class Member
     }
 
     /**
-     * @param the $lname
+     * @param string $lname
      */
     public function setLname($lname)
     {
@@ -151,15 +153,19 @@ class Member
     }
 
     /**
-     * @param the $age
+     * Sets the age of the member.
+     * Age must be greater than or equal to 18.
+     * @param int the age of the member
      */
     public function setAge($age)
     {
-        $this->age = $age;
+        if($age >= 18) {
+            $this->age = $age;
+        }
     }
 
     /**
-     * @param the $gender
+     * @param string the gender of the member.
      */
     public function setGender($gender)
     {
@@ -175,11 +181,15 @@ class Member
     }
 
     /**
+     * Sets the email address of the member.
+     * Email adress must match the format 'someone@example.com'.
      * @param the $email
      */
     public function setEmail($email)
     {
-        $this->email = $email;
+        if(preg_match("\w+@\w+\.com")) {
+            $this->email = $email;
+        }
     }
 
     /**
@@ -199,15 +209,19 @@ class Member
     }
 
     /**
+     * Sets the Bio of the member.
+     * Bio must be at least one character long.
      * @param the $bio
      */
     public function setBio($bio)
     {
-        $this->bio = $bio;
+        if(strlen($bio) >= 1) {
+            $this->bio = $bio;
+        }
     }
 
     /**
-     * @return the
+     * @return string the member's first name
      */
     public function getFname()
     {
@@ -215,7 +229,7 @@ class Member
     }
 
     /**
-     * @param the $fname
+     * @param string the member's first name
      */
     public function setFname($fname)
     {

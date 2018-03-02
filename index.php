@@ -102,8 +102,6 @@ $f3->route('POST /submit-profile', function($f3) {
     $member->setState($_POST['state']);
     if(isset($_POST['email'])) {
         $member->setEmail($_POST['email']);
-    } else {
-        $errors['email'] = "Please enter your email";
     }
     if(isset($_FILES['profilePic'])) {
         if($member->getProfilePic() != null) {
