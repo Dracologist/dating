@@ -26,11 +26,13 @@
         </tr>
         </thead>
         <tbody>
-        <repeat group="{{@members}}" value="{{@currentMember}}">
+        <?php foreach (($members?:[]) as $currentMember): ?>
+            <a href="<?= ($currentMember['member_id']) ?>">
                 <tr>
-                    <repeat group="{{@currentMember}}" value="{{@info}}"><td>{{@info}}</td></repeat>
+                    <?php foreach (($currentMember?:[]) as $info): ?><td><?= ($info) ?></td><?php endforeach; ?>
                 </tr>
-        </repeat>
+            </a>
+        <?php endforeach; ?>
         </tbody>
     </table>
 </div>

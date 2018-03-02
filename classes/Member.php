@@ -65,7 +65,7 @@ class Member
     {
         $this->fname = $first;
         $this->lname = $last;
-        if($years >= 18 && preg_match('\d+', $years)) {
+        if($years >= 18 && is_numeric($years)) {
             $this->age = $years;
         }
         $this->gender = $sex;
@@ -159,7 +159,7 @@ class Member
      */
     public function setAge($age)
     {
-        if($age >= 18 && preg_match('\d+', $age)) {
+        if($age >= 18 && is_numeric($age)) {
             $this->age = $age;
         }
     }
@@ -187,7 +187,7 @@ class Member
      */
     public function setEmail($email)
     {
-        if(preg_match("\w+@\w+\.com")) {
+        if(preg_match("/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/", $email)) {
             $this->email = $email;
         }
     }

@@ -1,6 +1,6 @@
 <?php
 require_once('vendor/autoload.php');
-
+require '/home/ekanzler/connect.php';
 session_start();
 session_save_path("/tmp/cache");
 ?>
@@ -15,10 +15,10 @@ session_save_path("/tmp/cache");
     <nav class="navbarnavbar-light bg-light">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="http://ekanzler.greenriverdev.com/328/dating">User</a>
+                <a class="nav-link" href="">User</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="http://ekanzler.greenriverdev.com/328/dating/admin">Admin</a>
+                <a class="nav-link" href="admin">Admin</a>
             </li>
         </ul>
     </nav>
@@ -33,14 +33,27 @@ new Session();
 $f3->set('indoorOptions', array("Watching TV", "Reading", "Napping", "Internet", "Video games", "Music"));
 $f3->set('outdoorOptions', array("Walking", "Hiking", "Running", "Bird watching", "Swimming", "Sports"));
 
-require '/home/ekanzler/connect.php';
-try {
-    $dbh = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-    echo 'Connected to database';
-}
-catch(PDOException $e) {
-    echo $e->getMessage();
-}
+/*
+     * CREATE TABLE member (
+        member_id int(9) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        fname varchar(25) NOT NULL,
+        lname varchar(25) NOT NULL,
+        age int(3) NOT NULL,
+        gender varchar(6) NOT NULL,
+        phone varchar(14) NOT NULL,
+        email varchar(25) NOT NULL,
+        state varchar(20) NOT NULL,
+        seeking varchar(6) NOT NULL,
+        bio varchar(600) NOT NULL,
+        premium tinyint NOT NULL,
+        image varchar(60),
+        interests varchar(60)
+        );
+     */
+
+$dbh = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+
+$f3->set('pdo', $dbh);
 
 $f3->route('GET /', function() {
     $view = new View();
@@ -112,7 +125,7 @@ $f3->route('POST /submit-profile', function($f3) {
             $name = $f3->get('SESSION.member')->getFname().
                 "-".$f3->get('SESSION.member')->getLname();
             $extension = "." . pathinfo($_FILES['profilePic']['name'],PATHINFO_EXTENSION);
-            if(file_exists("images/".$name.$extension)){
+            while(file_exists("images/".$name.$extension)){
                 $name .= "(1)";
             }
             $path = "images/".$name.$extension;
@@ -153,25 +166,9 @@ $f3->route('POST /submit-interests', function($f3) {
     echo $template->render($file);
 });
 
-$f3->route('GET|POST /finalize', function($f3, $dbh) {
-    /*
-     * CREATE TABLE member (
-        member_id int(9) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        fname varchar(25) NOT NULL,
-        lname varchar(25) NOT NULL,
-        age int(3) NOT NULL,
-        gender varchar(6) NOT NULL,
-        phone varchar(14) NOT NULL,
-        email varchar(25) NOT NULL,
-        state varchar(20) NOT NULL,
-        seeking varchar(6) NOT NULL,
-        bio varchar(600) NOT NULL,
-        premium tinyint NOT NULL,
-        image varchar(60),
-        interests varchar(60)
-        );
-     */
+$f3->route('GET|POST /finalize', function($f3) {
     $template = new Template;
+    $dbh = $f3->get('pdo');
     $cols = array("fname"=>$f3->get('SESSION.member')->getFname(),
         "lname"=>$f3->get('SESSION.member')->getLname(), "age"=>$f3->get('SESSION.member')->getAge(),
         "gender"=>$f3->get('SESSION.member')->getGender(), "phone"=>$f3->get('SESSION.member')->getPhone(),
@@ -198,44 +195,42 @@ $f3->route('GET|POST /finalize', function($f3, $dbh) {
                 $interests .= ", ";
             }
         }
+        $interests .= "";
         $cols['interests'] = $interests;
         $types['interests'] = PDO::PARAM_STR;
     }
     $fields = "";
     $values = "";
+    $first = true;
     foreach ($cols as $name=>$val){
-        $fields .= $val;
-        $values .= ":".$val;
-        if($val != end($cols)){
+        if(!$first){
             $fields .= ", ";
             $values .= ", ";
+        } else {
+            $first = false;
         }
+        $fields .= $name;
+        $values .= ":".$name;
     }
-    $sql = 'INSERT INTO member('.$fields.') VALUES('.$values.')';
+    $sql = "INSERT INTO member(".$fields.") VALUES(".$values.")";
     $statement = $dbh->prepare($sql);
     foreach ($cols as $key => &$value){
         $statement->bindParam(":".$key, $value, $types[$key]);
     }
     $statement->execute();
+    $f3->set('pdo', $dbh);
     echo "<p>Member added to database!</p>";
     echo $template->render('views/summary.html');
 });
 
-$f3->route('GET /admin', function($f3, $dbh) {
+$f3->route('GET /admin', function($f3) {
     $template = new Template;
+    $dbh = $f3->get('pdo');
     $sql = 'SELECT * FROM member';
     $statement = $dbh->prepare($sql);
-    $f3->set('SESSION.members', $statement->fetchAll(PDO::FETCH_ASSOC));
-    echo $template->render('views/admin.html');
-});
-
-$f3->route('GET /@id', function($f3, $dbh) {
-    $template = new Template;
-    $sql = 'SELECT * FROM member WHERE member_id = :id';
-    $statement = $dbh->prepare($sql);
-    $memberID = $f3->get('PARAMS.id');
-    $statement->bindParam(":id", $memberID, PDO::PARAM_INT);
-    $f3->set('SESSION.viewMember', $statement->fetch(PDO::FETCH_ASSOC));
+    $statement->execute();
+    $f3->set('members', $statement->fetchAll(PDO::FETCH_ASSOC));
+    $f3->set('pdo', $dbh);
     echo $template->render('views/admin.html');
 });
 

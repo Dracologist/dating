@@ -19,24 +19,24 @@
             <p>
                 <b>Interests:</b>
                 <?php foreach (($SESSION['member']->getOutdoorInterests()?:[]) as $outdoorInterest): ?>
-                    <?= ($outdoorInterest) ?><?php if ($outdoorInterest != end($SESSION['member']->getOutdoorInterests())): ?>,<?php endif; ?>
+                    <?= ($outdoorInterest) ?><?php if ($outdoorInterest != end($SESSION['member']->getOutdoorInterests()) || $SESSION['member']->getIndoorInterests() != null): ?>,<?php endif; ?>
                 <?php endforeach; ?>
                 <?php foreach (($SESSION['member']->getIndoorInterests()?:[]) as $indoorInterest): ?>
                     <?= ($indoorInterest) ?><?php if ($indoorInterest != end($SESSION['member']->getIndoorInterests())): ?>,<?php endif; ?>
                 <?php endforeach; ?>
             </p>
         <?php endif; ?>
+        <a href="finalize" class="btn btn-primary">Finish</a>
     </div>
     <div class="col">
         <?php if ($SESSION['premium']): ?>
             <?php if ($SESSION['member']->getProfilePic() != null): ?>
-                <img src="<?= ($SESSION['member']->getProfilePic()) ?>" class="rounded">
+                <img src="<?= ($SESSION['member']->getProfilePic()) ?>" title="<?= ($SESSION['member']->getProfilePic()) ?>"  class="rounded">
             <?php endif; ?>
         <?php endif; ?>
         <blockquote><b>Biography:</b> <?= ($SESSION['member']->getBio()) ?></blockquote>
     </div>
 </div>
 
-<a href="finalize" class="btn btn-primary">Finish</a>
 </body>
 </html>

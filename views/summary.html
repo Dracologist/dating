@@ -19,7 +19,7 @@
             <p>
                 <b>Interests:</b>
                 <repeat group="{{@SESSION.member->getOutdoorInterests()}}" value="{{@outdoorInterest}}">
-                    {{@outdoorInterest}}<check if="{{@outdoorInterest != end(@SESSION.member->getOutdoorInterests())}}">,</check>
+                    {{@outdoorInterest}}<check if="{{@outdoorInterest != end(@SESSION.member->getOutdoorInterests())}} || @SESSION.member->getIndoorInterests() != null">,</check>
                 </repeat>
                 <repeat group="{{@SESSION.member->getIndoorInterests()}}" value="{{@indoorInterest}}">
                     {{@indoorInterest}}<check if="{{@indoorInterest != end(@SESSION.member->getIndoorInterests())}}">,</check>
